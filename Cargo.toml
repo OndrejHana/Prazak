@@ -1,5 +1,6 @@
 [workspace]
 
 members = [
-  "graph"
+  "graph",
+  "verze1",
 ]

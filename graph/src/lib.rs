@@ -48,7 +48,7 @@ impl Graph {
         }
     }
 
-    pub fn find_shortest_path_brute_force(&self, start: usize) -> usize{
+    pub fn find_shortest_path_brute_force(&self, start: usize) -> (usize, Vec<usize>) {
         let mut path = Vec::new();
         let mut paths = Vec::new();
         let mut seen = vec![false; self.city_count];
@@ -56,19 +56,19 @@ impl Graph {
         self.walk(start, &mut path, &mut paths, &mut seen);
 
         let mut min = usize::MAX;
-        for valid_path in paths {
+        let mut min_path = 0;
+        for (index, valid_path) in paths.iter().enumerate() {
             let mut sum = 0;
             for v in 0..self.city_count {
                 sum += self.matrix[valid_path[v]][valid_path[v+1]];
             }
-            println!("{sum}");
             if sum < min {
                 min = sum;
+                min_path = index;
             }
         }
-        println!("{min}");
 
-        min
+        (min, paths[min_path].clone())
     }
 
     fn walk(&self, current: usize, path: &mut Vec<usize>, paths: &mut Vec<Vec<usize>>, seen: &mut Vec<bool>) -> bool {
