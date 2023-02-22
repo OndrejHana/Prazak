@@ -13,9 +13,9 @@ struct Args {
 
 fn main() {
     let args = Args::parse();
-    let g = Graph::new(args.city_count ,args.max_line_weight);
+    let g = Graph::generate_random(args.city_count ,args.max_line_weight);
     let now = time::Instant::now();
-    let (shortest_path_weight, path) =  g.find_shortest_path_brute_force(0);
+    let (shortest_path_weight, path) =  g.();
     let elapsed = now.elapsed();
 
     println!("Graph:\n{}", g);
