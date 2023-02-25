@@ -3,7 +3,7 @@ mod approx_graph;
 
 use crate::error::*;
 
-use approx_graph::ApproxGraph;
+use approx_graph::solve_tsp;
 use graph::*;
 use clap::Parser;
 
@@ -14,15 +14,12 @@ struct Args {
 }
 
 fn main() -> Result<()> {
-    let args: Args = Args::parse();
 
     let mut graphs = GraphFs::new();
-    graphs.load_from_file(&args.source)?;
+    graphs.add(Graph::generate_random(15, 100));
 
     for g in graphs {
-        let approx_g = ApproxGraph::new(g);
-
-        let (path, len) = approx_g.solve_tsp(0);
+        let (path, len) = solve_tsp(g, 0);
 
         println!("path: {:?}", path);
         println!("length: {}", len);

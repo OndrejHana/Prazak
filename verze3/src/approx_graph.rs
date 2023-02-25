@@ -1,80 +1,34 @@
-use std::{collections::BinaryHeap, cmp::{Reverse, Ordering}};
-
 use graph::Graph;
 
-#[derive(Eq, Debug)]
-struct Edge {
-    u: usize,
-    v: usize,
-    weight: usize,
-}
+pub fn solve_tsp(graph: Graph, start: usize) -> (Vec<usize>, usize) {
+    let mut current = start;
+    let mut path = Vec::new();
+    let mut seen = vec![false; graph.matrix.len()];
 
-impl Ord for Edge {
-    fn cmp(&self, other: &Self) -> Ordering {
-        return self.weight.cmp(&other.weight);
-    }
-}
+    path.push(current);
+    seen[current] = true;
 
-impl PartialOrd for Edge {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        return Some(self.cmp(other));
-    }
-}
-
-impl PartialEq for Edge {
-    fn eq(&self, other: &Self) -> bool {
-        return self.weight == other.weight;
-    }
-}
-
-
-pub struct ApproxGraph {
-    graph: Graph,
-}
-
-impl ApproxGraph {
-    pub fn new(graph: Graph) -> Self {
-        Self {
-            graph
-        }
-    }
-    pub fn solve_tsp(&self, start: usize) -> (Vec<usize>, usize) {
-        let sorted_edges = self.get_mst(start);
-
-        todo!()
-    }
-
-    fn get_mst(&self, start: usize) -> Vec<usize> {
-        let mst = Vec::new();
-
-        let sorted_edges = self.get_sorted_edge_list();
-
-        println!("{sorted_edges:?}");
-
-        return mst;
-    }
-
-
-    fn get_sorted_edge_list(&self) -> BinaryHeap<Reverse<Edge>> {
-        // using min binary heap to instantly sort for Kruskals algorithm
-        let mut heap = BinaryHeap::new();
-
-        for i in 0..self.graph.matrix.len() {
-            let row = &self.graph.matrix[i];
-
-            for j in 0..i {
-                if row[j] == 0 {
-                    continue;
-                }
-
-                heap.push(Reverse(Edge {
-                    u: i,
-                    v: j,
-                    weight: row[j]
-                }));
+    while path.len() < graph.matrix.len() {
+        let mut min = usize::MAX;
+        let mut next_vertex = None;
+        for neighbor in 0..graph.matrix.len() {
+            if seen[neighbor] {
+                continue;
             }
 
+            if graph.matrix[current][neighbor] < min {
+                min = graph.matrix[current][neighbor];
+                next_vertex = Some(neighbor);
+            }
         }
-        return heap;
+
+        if let Some(next_vertex) = next_vertex {
+            path.push(next_vertex);
+            seen[next_vertex] = true;
+            current = next_vertex;
+        }
     }
+
+    let sum = path.iter().sum();
+    return (path, sum);
 }
