@@ -2,7 +2,7 @@ use std::fmt;
 
 use rand::{thread_rng, Rng};
 
-/// Represents graph with adjacency matrix- `graph.matrix`
+/// Represents a graph with adjacency matrix- `graph.matrix`
 ///
 /// # Examples
 ///
