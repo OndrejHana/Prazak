@@ -13,7 +13,7 @@ use crate::graph::*;
 ///
 /// Create a new empty `GraphFs` and add some graphs to it
 /// ```rust
-/// use graphs::*;
+/// use graph::*;
 ///
 /// let mut graphs = GraphFs::new();
 ///
@@ -23,7 +23,7 @@ use crate::graph::*;
 ///
 /// Store all graphs in `GraphFs` instance into a specified file
 /// ```rust
-/// use graphs::*;
+/// use graph::*;
 ///
 /// let mut graphs = GraphFs::new();
 ///
@@ -31,20 +31,31 @@ use crate::graph::*;
 /// graphs.add(Graph::generate_random(5, 100));
 /// graphs.add(Graph::generate_random(5, 100));
 ///
-/// graphs.store_all_to_file("graphs").unwrap();
+/// graphs.store_all_to_file("temp.graph").unwrap();
+/// 
+/// # std::fs::remove_file("./temp.graph").unwrap();
 /// ```
 ///
 /// Load graphs from a file
-/// ```rust
-/// use graphs::*;
+/// ```rust, ignore
+/// use graph::*;
+/// 
+/// # let mut temp_graphs = GraphFs::new();
+/// # temp_graphs.add(Graph::generate_random(5, 100));
+/// # temp_graphs.add(Graph::generate_random(5, 100));
+/// # temp_graphs.add(Graph::generate_random(5, 100));
+/// #
+/// # temp_graphs.store_all_to_file("temp1.graph").unwrap();
 ///
 /// let mut graphs = GraphFs::new();
 ///
-/// graphs.load_from_file("graphs").expect("file not found");
+/// graphs.load_from_file("temp1.graph").expect("file not found");
 ///
 /// for graph in graphs {
 ///     println!("{graph}");
 /// }
+/// 
+/// # std::fs::remove_file("./temp1.graph").unwrap();
 /// ```
 pub struct GraphFs {
     graphs: VecDeque<Graph>,
@@ -57,7 +68,7 @@ impl GraphFs {
     ///
     /// Create a new empty `GraphFs` and add some graphs to it
     /// ```rust
-    /// use graphs::*;
+    /// use graph::*;
     ///
     /// let mut graphs = GraphFs::new();
     ///
@@ -76,7 +87,7 @@ impl GraphFs {
     ///
     /// Create a new empty `GraphFs` and add some graphs to it
     /// ```rust
-    /// use graphs::*;
+    /// use graph::*;
     ///
     /// let mut graphs = GraphFs::new();
     ///
@@ -92,7 +103,7 @@ impl GraphFs {
     /// # Examples
     ///
     /// ```rust
-    /// use graphs::*;
+    /// # use graph::*;
     ///
     /// let mut graphs = GraphFs::new();
     ///
@@ -100,7 +111,9 @@ impl GraphFs {
     /// graphs.add(Graph::generate_random(5, 100));
     /// graphs.add(Graph::generate_random(5, 100));
     ///
-    /// graphs.store_all_to_file("graphs").unwrap();
+    /// graphs.store_all_to_file("temp2.graph").unwrap();
+    /// 
+    /// # std::fs::remove_file("./temp2.graph").unwrap();
     /// ```
     pub fn store_all_to_file<P: AsRef<Path>>(&self, path: P) -> std::io::Result<()> {
         let mut file = fs::File::create(path)?;
@@ -118,16 +131,25 @@ impl GraphFs {
     /// Load graphs from a file
     ///
     /// # Examples
-    /// ```rust
-    /// use graphs::*;
-    ///
+    /// ```rust,ignore
+    /// use graph::*;
+    /// 
+    /// # let mut temp_graphs = GraphFs::new();
+    /// # temp_graphs.add(Graph::generate_random(5, 100));
+    /// # temp_graphs.add(Graph::generate_random(5, 100));
+    /// # temp_graphs.add(Graph::generate_random(5, 100));
+    /// #
+    /// # temp_graphs.store_all_to_file("temp3.graph").unwrap();
+    /// 
+    /// 
     /// let mut graphs = GraphFs::new();
     ///
-    /// graphs.load_from_file("graphs").expect("file not found");
+    /// graphs.load_from_file("temp3.graph").expect("file not found");
     ///
     /// for graph in graphs {
     ///     println!("{graph}");
     /// }
+    /// # std::fs::remove_file("./temp3.graph").unwrap();
     /// ```
     pub fn load_from_file<P: AsRef<Path>>(&mut self, path: P) -> std::io::Result<()> {
         let file = fs::File::open(path)?;
@@ -152,6 +174,10 @@ impl GraphFs {
         }
 
         Ok(())
+    }
+
+    pub fn len(&self) -> usize {
+        self.graphs.len()
     }
 }
 

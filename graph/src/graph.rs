@@ -8,7 +8,7 @@ use rand::{thread_rng, Rng};
 ///
 /// Graph can be created from adjacency matrix
 /// ```rust
-/// use graph::Graph
+/// use graph::Graph;
 ///
 /// let matrix = vec![vec![0,1,2], vec![1,0,3], vec![2,3,0]];
 /// let g = Graph::new(matrix);
@@ -28,6 +28,7 @@ use rand::{thread_rng, Rng};
 /// let g = Graph::generate_random(10, 100);
 /// ```
 ///
+#[derive(Debug)]
 pub struct Graph {
     pub matrix: Vec<Vec<usize>>,
 }
@@ -39,7 +40,7 @@ impl Graph {
     ///
     /// Graph can be created from adjacency matrix
     /// ```rust
-    /// use graph::Graph
+    /// use graph::Graph;
     ///
     /// let matrix = vec![vec![0,1,2], vec![1,0,3], vec![2,3,0]];
     /// let g = Graph::new(matrix);

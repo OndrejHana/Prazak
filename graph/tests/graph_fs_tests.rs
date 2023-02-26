@@ -1,65 +1,67 @@
+use std::fs;
+
 use graph::Graph;
 use graph::GraphFs;
 
 #[test]
 fn test_file_store() {
     let mut graphs = GraphFs::new();
-    graphs.add(Graph::generate_random(5, 100));
+    let g1 = Graph::generate_random(3, 10);
+    graphs.add(g1);
 
-    graphs.store_all_to_file("graphs").unwrap();
+    graphs.store_all_to_file("./temp1.graph").unwrap();
+
+    fs::File::open("./temp1.graph").unwrap();
+
+    fs::remove_file("./temp1.graph").unwrap();
 }
 
 #[test]
-fn test_store_multiple() {
+fn test_file_store_load() {
     let mut graphs = GraphFs::new();
-    graphs.add(Graph::generate_random(5, 100));
-    graphs.add(Graph::generate_random(5, 100));
-    graphs.add(Graph::generate_random(5, 100));
+    let g1 = Graph::generate_random(3, 10);
+    graphs.add(g1);
 
-    graphs.store_all_to_file("graphs").unwrap();
-    std::fs::remove_file("graphs").unwrap();
-}
+    graphs.store_all_to_file("./temp2.graph").unwrap();
 
-#[test]
-fn test_store_load() {
-    let mut graphs = GraphFs::new();
     let mut graphs2 = GraphFs::new();
 
-    graphs.add(Graph::generate_random(5, 100));
+    graphs2.load_from_file("./temp2.graph").unwrap();
 
-    graphs.store_all_to_file("graphs").unwrap();
-
-    graphs2.load_from_file("graphs").unwrap();
-
-    let g1 = graphs.next().unwrap();
-    let g2 = graphs2.next().unwrap();
-
-    assert_eq!(g1.matrix, g2.matrix);
-    std::fs::remove_file("graphs").unwrap();
-}
-
-#[test]
-fn test_store_load_multiple() {
-    let mut graphs = GraphFs::new();
-    let mut graphs2 = GraphFs::new();
-
-    graphs.add(Graph::generate_random(5, 100));
-    graphs.add(Graph::generate_random(5, 100));
-    graphs.add(Graph::generate_random(5, 100));
-
-    graphs.store_all_to_file("graphs").unwrap();
-
-    graphs2.load_from_file("graphs").unwrap();
-
-    std::fs::remove_file("graphs").unwrap();
-
-    loop {
+    for _ in 0..graphs.len() {
         if let Some(g1) = graphs.next() {
             if let Some(g2) = graphs2.next() {
                 assert_eq!(g1.matrix, g2.matrix);
             }
-        } else {
-            return;
         }
     }
+
+    fs::remove_file("./temp2.graph").unwrap();
+}
+
+#[test]
+fn test_file_store_load_multiple() {
+    let mut graphs = GraphFs::new();
+    
+    graphs.add(Graph::generate_random(3, 10));
+    graphs.add(Graph::generate_random(3, 10));
+    graphs.add(Graph::generate_random(3, 10));
+    graphs.add(Graph::generate_random(3, 10));
+    graphs.add(Graph::generate_random(3, 10));
+
+    graphs.store_all_to_file("./temp3.graph").unwrap();
+
+    let mut graphs2 = GraphFs::new();
+
+    graphs2.load_from_file("./temp3.graph").unwrap();
+
+    for _ in 0..graphs.len() {
+        if let Some(g1) = graphs.next() {
+            if let Some(g2) = graphs2.next() {
+                assert_eq!(g1.matrix, g2.matrix);
+            }
+        }
+    }
+
+    fs::remove_file("./temp3.graph").unwrap();
 }
