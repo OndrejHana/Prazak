@@ -6,7 +6,7 @@ pub fn solve_tsp_brute_force(graph: &Graph, start: usize) -> (usize, Vec<usize>)
     let mut shortest_path = Vec::new();
     let mut seen = vec![false; city_count];
 
-    walk(&graph, start, &mut path, &mut shortest_path, &mut seen);
+    walk(graph, start, &mut path, &mut shortest_path, &mut seen);
 
     let mut shortest_path_cost = 0;
     for i in 0..graph.matrix.len()-1 {
@@ -23,7 +23,7 @@ fn walk(graph: &Graph, current: usize, path: &mut Vec<usize>, shortest_path: &mu
     if path.len() == city_count {
         path.push(path[0]);
 
-        if shortest_path.len() == 0 {
+        if shortest_path.is_empty() {
             *shortest_path = path.clone();
         }
 
@@ -62,5 +62,5 @@ fn walk(graph: &Graph, current: usize, path: &mut Vec<usize>, shortest_path: &mu
     path.pop();
     seen[current] = false;
 
-    false
+    return false;
 }

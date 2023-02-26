@@ -34,7 +34,7 @@ fn test_store_load() {
     let g1 = graphs.next().unwrap();
     let g2 = graphs2.next().unwrap();
 
-    assert_eq!(g1.matrix,g2.matrix);
+    assert_eq!(g1.matrix, g2.matrix);
     std::fs::remove_file("graphs").unwrap();
 }
 
@@ -56,13 +56,10 @@ fn test_store_load_multiple() {
     loop {
         if let Some(g1) = graphs.next() {
             if let Some(g2) = graphs2.next() {
-                assert_eq!(g1.matrix,g2.matrix);
+                assert_eq!(g1.matrix, g2.matrix);
             }
         } else {
             return;
         }
     }
-
-
 }
-

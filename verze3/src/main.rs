@@ -1,19 +1,16 @@
-mod error;
 mod approx_graph;
 
-use crate::error::*;
-
 use approx_graph::solve_tsp;
-use graph::*;
 use clap::Parser;
+use graph::GraphFs;
 
 #[derive(Parser, Debug)]
 struct Args {
-    // path to source file with graphs
+    /// path to source file with graphs
     source: String,
 }
 
-fn main() -> Result<()> {
+fn main() -> std::io::Result<()> {
 
     let mut graphs = GraphFs::new();
     graphs.load_from_file("../in.graph")?;

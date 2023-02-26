@@ -1,6 +1,6 @@
 use std::collections::VecDeque;
 use std::fs;
-use std::io::{Write, BufReader, BufRead};
+use std::io::{BufRead, BufReader, Write};
 use std::path::Path;
 
 use crate::graph::*;
@@ -8,10 +8,10 @@ use crate::graph::*;
 /// Wrapper around `graph::Graph`, responsible for loading and writing graphs to file system
 ///
 /// `GraphFs` can hold multiple graphs. Loop trough them with iterator
-/// 
-/// # Examples 
 ///
-/// Create a new empty `GraphFs` and add some graphs to it 
+/// # Examples
+///
+/// Create a new empty `GraphFs` and add some graphs to it
 /// ```rust
 /// use graphs::*;
 ///
@@ -21,7 +21,7 @@ use crate::graph::*;
 /// graphs.add(Graph::generate_random(5, 100));
 /// ```
 ///
-/// Store all graphs in `GraphFs` instance into a specified file 
+/// Store all graphs in `GraphFs` instance into a specified file
 /// ```rust
 /// use graphs::*;
 ///
@@ -34,7 +34,7 @@ use crate::graph::*;
 /// graphs.store_all_to_file("graphs").unwrap();
 /// ```
 ///
-/// Load graphs from a file 
+/// Load graphs from a file
 /// ```rust
 /// use graphs::*;
 ///
@@ -51,12 +51,11 @@ pub struct GraphFs {
 }
 
 impl GraphFs {
-
     /// Create a new, empty `GraphFs`
     ///
-    /// # Examples 
+    /// # Examples
     ///
-    /// Create a new empty `GraphFs` and add some graphs to it 
+    /// Create a new empty `GraphFs` and add some graphs to it
     /// ```rust
     /// use graphs::*;
     ///
@@ -67,15 +66,15 @@ impl GraphFs {
     /// ```
     pub fn new() -> Self {
         Self {
-            graphs: VecDeque::new()
+            graphs: VecDeque::new(),
         }
     }
 
     /// Add `Graph` to existing GraphFs
     ///
-    /// # Examples 
+    /// # Examples
     ///
-    /// Create a new empty `GraphFs` and add some graphs to it 
+    /// Create a new empty `GraphFs` and add some graphs to it
     /// ```rust
     /// use graphs::*;
     ///
@@ -88,9 +87,9 @@ impl GraphFs {
         self.graphs.push_back(g);
     }
 
-    /// Store all graphs in `GraphFs` instance into a specified file 
+    /// Store all graphs in `GraphFs` instance into a specified file
     ///
-    /// # Examples 
+    /// # Examples
     ///
     /// ```rust
     /// use graphs::*;
@@ -116,7 +115,7 @@ impl GraphFs {
         Ok(())
     }
 
-    /// Load graphs from a file 
+    /// Load graphs from a file
     ///
     /// # Examples
     /// ```rust
@@ -130,7 +129,7 @@ impl GraphFs {
     ///     println!("{graph}");
     /// }
     /// ```
-    pub fn load_from_file<P: AsRef<Path>>(&mut self,path: P) -> std::io::Result<()> {
+    pub fn load_from_file<P: AsRef<Path>>(&mut self, path: P) -> std::io::Result<()> {
         let file = fs::File::open(path)?;
         let buf_reader = BufReader::new(file);
 
@@ -144,7 +143,10 @@ impl GraphFs {
                 continue;
             }
 
-            let row: Vec<usize> = data[1..data.len()-1].split(", ").map(|x| x.parse().unwrap()).collect();
+            let row: Vec<usize> = data[1..data.len() - 1]
+                .split(", ")
+                .map(|x| x.parse().unwrap())
+                .collect();
 
             matrix.push(row);
         }
@@ -158,5 +160,11 @@ impl Iterator for GraphFs {
 
     fn next(&mut self) -> Option<Self::Item> {
         self.graphs.pop_front()
+    }
+}
+
+impl Default for GraphFs {
+    fn default() -> Self {
+        Self::new()
     }
 }
