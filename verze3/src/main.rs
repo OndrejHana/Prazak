@@ -9,8 +9,8 @@ use clap::Parser;
 
 #[derive(Parser, Debug)]
 struct Args {
+    // path to source file with graphs
     source: String,
-    destination: String
 }
 
 fn main() -> Result<()> {
