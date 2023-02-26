@@ -140,6 +140,7 @@ impl GraphFs {
 
             if data.is_empty() {
                 self.add(Graph::new(matrix.clone()));
+                matrix = Vec::new();
                 continue;
             }
 

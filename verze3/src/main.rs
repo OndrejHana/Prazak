@@ -16,10 +16,11 @@ struct Args {
 fn main() -> Result<()> {
 
     let mut graphs = GraphFs::new();
-    graphs.add(Graph::generate_random(15, 100));
+    graphs.load_from_file("../in.graph")?;
 
     for g in graphs {
-        let (path, len) = solve_tsp(g, 0);
+
+        let (path, len) = solve_tsp(&g, 0);
 
         println!("path: {:?}", path);
         println!("length: {}", len);

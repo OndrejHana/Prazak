@@ -2,6 +2,7 @@
 
 members = [
   "graph",
+  "graph_maker",
   "verze1",
   "verze3",
 ]
