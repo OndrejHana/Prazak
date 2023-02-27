@@ -42,7 +42,7 @@ fn test_file_store_load() {
 #[test]
 fn test_file_store_load_multiple() {
     let mut graphs = GraphFs::new();
-    
+
     graphs.add(Graph::generate_random(3, 10));
     graphs.add(Graph::generate_random(3, 10));
     graphs.add(Graph::generate_random(3, 10));

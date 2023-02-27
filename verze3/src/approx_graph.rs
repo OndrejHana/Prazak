@@ -1,7 +1,6 @@
 use std::{collections::HashMap, sync::mpsc, thread};
 
 use graph::Graph;
-use num_cpus;
 
 #[derive(Debug)]
 struct SubGraph {
@@ -27,9 +26,7 @@ pub fn solve_tsp(graph: &Graph) -> (Vec<usize>, usize) {
                 subgraph.path.push(*subgraph.vertex_map.get(&v).unwrap());
             }
 
-            if let Err(_) = tx.send(subgraph) {
-                return;
-            };
+            tx.send(subgraph);
         });
 
         handles.push(handle);

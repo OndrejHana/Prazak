@@ -32,14 +32,14 @@ use crate::graph::*;
 /// graphs.add(Graph::generate_random(5, 100));
 ///
 /// graphs.store_all_to_file("temp.graph").unwrap();
-/// 
+///
 /// # std::fs::remove_file("./temp.graph").unwrap();
 /// ```
 ///
 /// Load graphs from a file
 /// ```rust, ignore
 /// use graph::*;
-/// 
+///
 /// # let mut temp_graphs = GraphFs::new();
 /// # temp_graphs.add(Graph::generate_random(5, 100));
 /// # temp_graphs.add(Graph::generate_random(5, 100));
@@ -54,7 +54,7 @@ use crate::graph::*;
 /// for graph in graphs {
 ///     println!("{graph}");
 /// }
-/// 
+///
 /// # std::fs::remove_file("./temp1.graph").unwrap();
 /// ```
 pub struct GraphFs {
@@ -112,7 +112,7 @@ impl GraphFs {
     /// graphs.add(Graph::generate_random(5, 100));
     ///
     /// graphs.store_all_to_file("temp2.graph").unwrap();
-    /// 
+    ///
     /// # std::fs::remove_file("./temp2.graph").unwrap();
     /// ```
     pub fn store_all_to_file<P: AsRef<Path>>(&self, path: P) -> std::io::Result<()> {
@@ -133,15 +133,15 @@ impl GraphFs {
     /// # Examples
     /// ```rust,ignore
     /// use graph::*;
-    /// 
+    ///
     /// # let mut temp_graphs = GraphFs::new();
     /// # temp_graphs.add(Graph::generate_random(5, 100));
     /// # temp_graphs.add(Graph::generate_random(5, 100));
     /// # temp_graphs.add(Graph::generate_random(5, 100));
     /// #
     /// # temp_graphs.store_all_to_file("temp3.graph").unwrap();
-    /// 
-    /// 
+    ///
+    ///
     /// let mut graphs = GraphFs::new();
     ///
     /// graphs.load_from_file("temp3.graph").expect("file not found");
