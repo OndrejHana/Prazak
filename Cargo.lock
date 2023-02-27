@@ -672,6 +672,7 @@ name = "verze4_master"
 version = "0.1.0"
 dependencies = [
  "config",
+ "graph",
  "serde",
  "serde_json",
 ]
@@ -681,6 +682,7 @@ name = "verze4_slave"
 version = "0.1.0"
 dependencies = [
  "config",
+ "graph",
  "num_cpus",
  "serde",
  "serde_json",

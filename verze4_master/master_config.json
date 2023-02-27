@@ -1,4 +1,5 @@
 {
+  "graph_source": "../in.graph",
   "port": 8000,
   "slaves": [
     {
