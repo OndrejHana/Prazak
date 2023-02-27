@@ -29,7 +29,7 @@ NP-Hard problémy sice nelze řešit optimálně v polynomiálním čase, může
 
 K tomu, abychom tohoto dosáhli, potřebujeme nějakou greedy heuristiku, která umožní přeskočit co nejvíce operací, a zároveň vrátí dostatečně přesný výsledek.
 
-Pro verze 2 a 3 jsem proto použil **Nearest neighbor heuristiku**, která běží v nejhorším případě v čase $O(n^2)$ a vrátí cestu která je garantovaně maximálně 2x delší než optimální.
+Pro verze 2 a 3 jsem proto použil **Nearest neighbor heuristiku**, která běží v nejhorším případě v čase `O(n^2)` a vrátí cestu která je garantovaně maximálně 2x delší než optimální.
 
 Dnes existují efektivnější algoritmy, s nižší časovou náročností i přesnější aproximací, pro účely tohoto úkolu však toto stačí. 
 
