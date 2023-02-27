@@ -1,6 +1,8 @@
 mod approx_graph;
 
-use approx_graph::solve_tsp;
+use std::time;
+
+use approx_graph::*;
 use clap::Parser;
 use graph::GraphFs;
 
@@ -11,16 +13,21 @@ struct Args {
 }
 
 fn main() -> std::io::Result<()> {
+    let args: Args = Args::parse();
 
     let mut graphs = GraphFs::new();
-    graphs.load_from_file("../in.graph")?;
+    graphs.load_from_file(args.source)?;
 
     for g in graphs {
+        let now = time::Instant::now();
 
-        let (path, len) = solve_tsp(&g, 0);
+        let (path, len) = solve_tsp(&g);
+
+        let elapsed = now.elapsed();
 
         println!("path: {:?}", path);
         println!("length: {}", len);
+        println!("Elapsed: {}ms", elapsed.as_millis());
     }
 
     Ok(())

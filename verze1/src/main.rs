@@ -1,8 +1,8 @@
 use verze1::solve_tsp_brute_force;
 
-use std::time;
-use graph::GraphFs;
 use clap::Parser;
+use graph::GraphFs;
+use std::time;
 
 #[derive(Debug, Parser)]
 struct Args {

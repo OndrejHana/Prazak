@@ -4,6 +4,8 @@ members = [
   "graph",
   "graph_maker",
   "verze1",
+  "verze2",
   "verze3",
-  "verze4",
+  "verze4_master",
+  "verze4_slave",
 ]
