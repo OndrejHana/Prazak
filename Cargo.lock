@@ -322,6 +322,10 @@ dependencies = [
 [[package]]
 name = "verze2"
 version = "0.1.0"
+dependencies = [
+ "clap",
+ "graph",
+]
 
 [[package]]
 name = "verze3"
