@@ -69,7 +69,7 @@ Verze 3 je poté vícevláknová implementace tohoto algoritmu. Graf se nejdří
 # Spuštění
 Na github repositáři můžete najít release, kde jsou ke stažení binárky jednotlivých implementací, stejně tak jako programu pro generování grafů. 
 
-po stažení kteréhokoliv programu můžete spustit
+po prohlednuti pozadovanych argumentu kteréhokoliv programu můžete spustit
 ```cmd
 ./verze1.exe --help
 ```
